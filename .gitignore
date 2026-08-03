@@ -1,0 +1,119 @@
+# ==========================================
+# Environments & Secrets (CRITICAL)
+# ==========================================
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Environment files containing secret keys, API keys, DB credentials
+.env
+.env.*
+!.env.example
+!.env.template
+
+# ==========================================
+# Python / FastAPI / Uvicorn Caches
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Testing & Coverage (Pytest, Alembic, etc.)
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.alembic/
+
+# ==========================================
+# Node.js / React Caches & Dependencies
+# ==========================================
+# Dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Production / Build outputs
+/frontend/dist/
+/frontend/build/
+/frontend/out/
+
+# Vite / Next.js / React caches
+.npm
+.eslintcache
+.stylelintcache
+.vite/
+.next/
+.turbo/
+.parcel-cache/
+
+# Debug logs & local overrides
+.pnp
+.pnp.js
+
+# ==========================================
+# IDE & System Files
+# ==========================================
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editor / IDE configs
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# ==========================================
+# Database & SQLite Files (if testing locally)
+# ==========================================
+*.sqlite
+*.sqlite3
+*.db
