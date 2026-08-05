@@ -26,7 +26,8 @@ from app.models.squad import SquadPlayer
 from app.models.reference import GameWeek, PropMarket
 from app.models.betting import Bet, LedgerEntry
 
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
+sync_url = DATABASE_URL.replace("+aiosqlite", "")
+config.set_main_option("sqlalchemy.url", sync_url)
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
