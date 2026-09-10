@@ -3,9 +3,18 @@ from app.users import fastapi_users, auth_backend, current_active_user
 from app.schemas.user import UserRead, UserCreate
 from app.models.user import User
 from app.routers import players, squad, leagues
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI(title="Prop League API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(
     fastapi_users.get_auth_router(auth_backend), prefix="/auth/jwt", tags=["auth"]
