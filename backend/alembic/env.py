@@ -25,6 +25,7 @@ from app.models.player import Player
 from app.models.squad import SquadPlayer
 from app.models.reference import GameWeek, PropMarket
 from app.models.betting import Bet, LedgerEntry
+from app.models.fixture import Fixture
 
 sync_url = DATABASE_URL.replace("+aiosqlite", "")
 config.set_main_option("sqlalchemy.url", sync_url)

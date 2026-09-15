@@ -1,9 +1,9 @@
 import httpx
 
 FPL_BOOTSTRAP_URL = "https://fantasy.premierleague.com/api/bootstrap-static/"
+FPL_SUMMARY_URL = "https://fantasy.premierleague.com/api/element-summary/"
 
 POSITION_MAP = {1: "GK", 2: "DEF", 3: "MID", 4: "FWD"}
-
 
 async def fetch_players() -> list[dict]:
     async with httpx.AsyncClient() as client:
@@ -22,3 +22,15 @@ async def fetch_players() -> list[dict]:
             "position": POSITION_MAP[el["element_type"]],
         })
     return players
+
+async def fetch_player_history(fpl_id: int) -> list[dict]:
+    """
+    Per-gameweek stats for a single player this season, from FPL's
+    element-summary endpoint.
+    """
+    url = f"{FPL_SUMMARY_URL}{fpl_id}/"
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(url, timeout=10.0)
+        resp.raise_for_status()
+        data = resp.json()
+    return data.get("history", [])
