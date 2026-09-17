@@ -5,6 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db
+from app.models.betting import LedgerEntry
 from app.models.league import League, LeagueMembership
 from app.models.user import User
 from app.users import current_active_user
@@ -33,6 +34,15 @@ async def create_league(
 
     membership = LeagueMembership(user_id=user.id, league_id=league.id)
     db.add(membership)
+    await db.flush()
+
+    await db.commit()
+    db.add(LedgerEntry(
+        league_membership_id=membership.id,
+        type="starting_grant",
+        amount=league.starting_credits,
+        balance_after=league.starting_credits,
+    ))
     await db.commit()
 
     return {
@@ -65,6 +75,15 @@ async def join_league(
 
     membership = LeagueMembership(user_id=user.id, league_id=league.id)
     db.add(membership)
+    await db.flush()
+
+    db.add(LedgerEntry(
+        league_membership_id=membership.id,
+        type="starting_grant",
+        amount=league.starting_credits,
+        balance_after=league.starting_credits,
+    ))
+    await db.commit()
     await db.commit()
 
     return {"status": "joined", "league": league.name}

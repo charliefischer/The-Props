@@ -1,7 +1,9 @@
 import httpx
 
-FPL_BOOTSTRAP_URL = "https://fantasy.premierleague.com/api/bootstrap-static/"
-FPL_SUMMARY_URL = "https://fantasy.premierleague.com/api/element-summary/"
+FPL_ROOT = "https://fantasy.premierleague.com/api/"
+FPL_BOOTSTRAP_URL = f"{FPL_ROOT}bootstrap-static/"
+FPL_SUMMARY_URL = f"{FPL_ROOT}element-summary/"
+FPL_FIXTURE_URL = f"{FPL_ROOT}fixtures/"
 
 POSITION_MAP = {1: "GK", 2: "DEF", 3: "MID", 4: "FWD"}
 
@@ -34,3 +36,17 @@ async def fetch_player_history(fpl_id: int) -> list[dict]:
         resp.raise_for_status()
         data = resp.json()
     return data.get("history", [])
+
+async def fetch_bootstrap() -> dict:
+    """Raw bootstrap-static payload — shared by players, gameweeks, teams."""
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(FPL_BOOTSTRAP_URL, timeout=10.0)
+        resp.raise_for_status()
+        return resp.json()
+
+
+async def fetch_fixtures() -> list[dict]:
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(FPL_FIXTURE_URL, timeout=10.0)
+        resp.raise_for_status()
+        return resp.json()

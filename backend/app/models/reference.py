@@ -1,6 +1,6 @@
-from sqlalchemy import String, Integer, DateTime, Boolean
+from sqlalchemy import String, Integer, DateTime, Boolean, Float, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
-from datetime import datetime
+from datetime import datetime, timezone
 from app.db import Base
 from app.models import gen_uuid
 
@@ -19,4 +19,15 @@ class PropMarket(Base):
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=gen_uuid)
     code: Mapped[str] = mapped_column(String(32), unique=True, nullable=False)
-    display_name: Mapped[str] = mapped_column(String(64), nullable=False) 
+    display_name: Mapped[str] = mapped_column(String(64), nullable=False)
+
+class PlayerOdds(Base):
+    __tablename__ = "player_odds"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=gen_uuid)
+    player_id: Mapped[str] = mapped_column(String(36), ForeignKey("player.id"), nullable=False)
+    gameweek_id: Mapped[str] = mapped_column(String(36), ForeignKey("gameweek.id"), nullable=False)
+    prop_market_id: Mapped[str] = mapped_column(String(36), ForeignKey("prop_market.id"), nullable=False)
+    probability: Mapped[float] = mapped_column(Float, nullable=False)
+    odds_decimal: Mapped[float] = mapped_column(Float, nullable=False)
+    computed_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))

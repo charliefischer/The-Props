@@ -33,3 +33,6 @@ frontend:
  
 migrate:
 	@cd $(BACKEND_DIR) && . venv/bin/activate && alembic upgrade head
+
+test:
+	@cd $(BACKEND_DIR) && . venv/bin/activate && pytest -v
