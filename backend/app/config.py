@@ -11,3 +11,8 @@ if not ODDS_API_KEY:
 
 if not ODDS_API_BASE_URL:
     raise RuntimeError("ODDS_API_BASE_URL is not set — add it to backend/.env")
+
+JWT_SECRET = os.getenv("JWT_SECRET")
+
+if not JWT_SECRET:
+    raise RuntimeError("JWT_SECRET is not set — add it to backend/.env")

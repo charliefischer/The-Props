@@ -2,15 +2,19 @@ from fastapi import FastAPI, Depends
 from app.users import fastapi_users, auth_backend, current_active_user
 from app.schemas.user import UserRead, UserCreate
 from app.models.user import User
-from app.routers import bets, players, squad, leagues
+from app.routers import bets, players, squad, leagues, odds
 from fastapi.middleware.cors import CORSMiddleware
+
+import os
 
 
 app = FastAPI(title="Prop League API")
 
+allowed_origins = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -33,9 +37,7 @@ async def get_me(user: User = Depends(current_active_user)):
     return {"id": user.id, "username": user.username, "email": user.email}
 
 app.include_router(players.router)
-
 app.include_router(squad.router)
-
 app.include_router(leagues.router)
-
 app.include_router(bets.router)
+app.include_router(odds.router)

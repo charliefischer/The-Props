@@ -81,7 +81,7 @@ export default function LeaguesPage() {
         <ul className="mb-8">
           {leagues.map((l) => (
             <li key={l.id} className="flex justify-between items-center border-b py-2">
-              <span>{l.name}</span>
+              <Link href={`/leagues/${l.id}`} className="underline">{l.name}</Link>
               <span className="text-sm text-gray-500">
                 Invite code: <span className="font-mono">{l.invite_code}</span>
               </span>

@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db import get_db
 from app.models.user import User
 
-SECRET = "CHANGE_ME_dev_only_secret"
+from app.config import JWT_SECRET as SECRET
 
 
 async def get_user_db(session: AsyncSession = Depends(get_db)):

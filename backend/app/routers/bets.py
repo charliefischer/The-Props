@@ -10,23 +10,11 @@ from app.models.squad import SquadPlayer
 from app.models.reference import GameWeek, PropMarket, PlayerOdds
 from app.models.betting import Bet, LedgerEntry
 from app.schemas.bet import BetCreate
-from app.services.balance import get_balance
+from app.services.balance import get_membership, get_balance
 from app.users import current_active_user
 
 router = APIRouter(prefix="/leagues/{league_id}/bets", tags=["bets"])
 
-
-async def get_membership(db: AsyncSession, league_id: str, user_id: str) -> LeagueMembership:
-    result = await db.execute(
-        select(LeagueMembership).where(
-            LeagueMembership.league_id == league_id,
-            LeagueMembership.user_id == user_id,
-        )
-    )
-    membership = result.scalar_one_or_none()
-    if not membership:
-        raise HTTPException(403, "You are not a member of this league")
-    return membership
 
 
 @router.post("")

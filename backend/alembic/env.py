@@ -27,7 +27,7 @@ from app.models.reference import GameWeek, PropMarket
 from app.models.betting import Bet, LedgerEntry
 from app.models.fixture import Fixture
 
-sync_url = DATABASE_URL.replace("+aiosqlite", "")
+sync_url = DATABASE_URL.replace("+aiosqlite", "").replace("+asyncpg", "")
 config.set_main_option("sqlalchemy.url", sync_url)
 target_metadata = Base.metadata
 
@@ -35,6 +35,7 @@ target_metadata = Base.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+
 
 
 def run_migrations_offline() -> None:

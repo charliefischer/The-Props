@@ -36,3 +36,9 @@ migrate:
 
 test:
 	@cd $(BACKEND_DIR) && . venv/bin/activate && pytest -v
+
+settle:
+	@cd $(BACKEND_DIR) && . venv/bin/activate && python -m app.scripts.settle
+
+sync:
+	@cd $(BACKEND_DIR) && . venv/bin/activate && python -m app.scripts.run_sync
